@@ -85,5 +85,5 @@ passwd -e jaewoo : jaewoo(사용자)의 비밀번호를 강제로 만료시키�
 passwd 명령어 (https://itwiki.kr/w/%EB%A6%AC%EB%88%85%EC%8A%A4_passwd(%EB%AA%85%EB%A0%B9%EC%96%B4))
 
 #### monitoring.sh 설정
-- 내일하기
+- 내일하기.
 - 
