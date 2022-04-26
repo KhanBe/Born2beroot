@@ -3,12 +3,26 @@ Project in 42seoul 4th
 
 
 ## description
+- Virtual Box를 사용한다
+- signature.txt파일만 제출하면 된다. (가상 컴퓨터 가상디스크 서명을 붙여 넣으면된다.)
+- 그래픽 인터페이스는 사용되지 않는다.
+- 데비안 쓰는것을 추천한다.
+- LVM을 사용하여 암호화된 파티션을 2개 이상 생성해야 한다.
+- ssh 포트는 4242에서만 실행해야한다.
+- 보안상의 이유로 root로 불가능하게 한다.
+- 디펜스중에 ssh는 새 계정으로 테스트 해야한다.
+- UFW 방화벽으로 운영 체제를 구성해야 하므로 4242포트만 열어둔다.
+- 가상머신 시작 시 방화벽이 활성화되어 있어야 한다.
+- 가상 머신의 hostname은 자기이름42 이어야한다.
+- 평가동안 hostname을 수정해야 한다
+- 디펜스중에 새 사용자를 만들고 그룹에 할당해야한다.
+- 비밀번호는 30일마다 만료되어야 한다.
 
 ### lsblk 명령어
 - 부트로더를 sda1에 설치한 것을 확인할 수있다. (subject)
 
 ### sudo 설치
-- apt-get update (패키지 목록을 업데이트한다.)
+-get update (패키지 목록을 업데이트한다.)
 - apt-get install sudo (sudo를 설치한다.)
 - apt : 패키지를 관리하는 도구
 
@@ -30,7 +44,7 @@ Project in 42seoul 4th
 - mkdir /var/log/sudo 명령
 
 ### usermod
-- infor : usermod -aG "그룹" "계정" > 계정의 소속 그룹을 추가한다. (https://dololak.tistory.com/270)
+- info : usermod -aG "그룹" "계정" > 계정의 소속 그룹을 추가한다. (https://dololak.tistory.com/270)
 - usermod -aG sudo jaewoo 입력
 - login jaewoo 입력
 - sudo명령어 아무거나 실행
@@ -158,3 +172,24 @@ printf " cmd\n"
 
 ### group
 - 그룹 확인 : cat /etc/group
+- groupadd user42 > 그룹 추가
+- usermod -aG sudo,user42 jaewoo(사용자이름) > 계정의 소속 그룹을 추가 한다.
+- usermod -g user42 jaewoo > 계정의 기본 소속 그룹을 변경한다.
+
+### apt & aptitude
+#### apt : 소프트웨어의 설치와 제거 처리해주는 패키지 관리 툴
+
+#### aptitude : 사용자 인터페이스를 추가해 사용자와 대화형으로 패키지를 검색해 설치, 제거 가능한 high-level 패키지 관리도구이다.
+- apt 보다 방대하다.
+- apt-get, get-cache의 기능들을 가지고있다.
+- (https://velog.io/@joonpark/aptitude-vs-apt)
+
+### hostname 변경
+- hostname 이름 > 재 시작시 다시 돌아옴
+- hostnamectl set-hostname 이름 > 영구 변경
+
+### user 전체 보기
+- grep /bin/bash /etc/passwd | cut -f1 -d:
+
+### user 추가
+- adduser 이름
