@@ -4,7 +4,6 @@ Project in 42seoul 4th
 
 ## subject translation
 - Virtual Box를 사용한다
-- signature.txt파일만 제출하면 된다. (가상 컴퓨터 가상디스크 서명을 붙여 넣으면된다.)
 - 그래픽 인터페이스는 사용되지 않는다.
 - 데비안 쓰는것을 추천한다.
 - LVM을 사용하여 암호화된 파티션을 2개 이상 생성해야 한다.
@@ -48,6 +47,9 @@ LVM이 활성 상태인지 여부.
 sudo 프로그램으로 실행된 명령 수.
 ```
 
+- signature.txt파일만 제출하면 된다. (가상 컴퓨터 가상디스크 서명을 붙여 넣으면된다.)
+- shasum 파일이름.vid > 명령을 한다.
+- 해시값을 signature.txt파일에 담아 제출한다.
 ---
 
 ### lsblk 명령어
