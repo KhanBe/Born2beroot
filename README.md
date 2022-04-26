@@ -2,7 +2,7 @@
 Project in 42seoul 4th
 
 
-## subject
+## subject translation
 - Virtual Box를 사용한다
 - signature.txt파일만 제출하면 된다. (가상 컴퓨터 가상디스크 서명을 붙여 넣으면된다.)
 - 그래픽 인터페이스는 사용되지 않는다.
@@ -47,6 +47,9 @@ LVM이 활성 상태인지 여부.
 서버의 IPv4 주소 및 해당 MAC(Media Access Control) 주소.
 sudo 프로그램으로 실행된 명령 수.
 ```
+
+---
+
 ### lsblk 명령어
 - 부트로더를 sda1에 설치한 것을 확인할 수있다. (subject)
 
