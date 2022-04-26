@@ -2,7 +2,7 @@
 Project in 42seoul 4th
 
 
-## description
+## subject
 - Virtual Box를 사용한다
 - signature.txt파일만 제출하면 된다. (가상 컴퓨터 가상디스크 서명을 붙여 넣으면된다.)
 - 그래픽 인터페이스는 사용되지 않는다.
@@ -17,7 +17,36 @@ Project in 42seoul 4th
 - 평가동안 hostname을 수정해야 한다
 - 디펜스중에 새 사용자를 만들고 그룹에 할당해야한다.
 - 비밀번호는 30일마다 만료되어야 한다.
-
+- 비밀번호 수정을 허용하는 최소 일수는 2로 설정한다.
+- 사용자는 암호가 만료되기 7일전에 경고 메세지를 받는다.
+- 비밀번호 10자 이상, 대문자포함, 문자와 숫자 또는 내용이 연속 3개 이상 포함되면 안된다.
+- 암호에는 사용자 이름이 포함되면 안된다.
+- root의 암호도 규칙을 지켜야한다.
+- 이전 암호의 일부가 아닌 7자 이상이어야 한다는 규칙은 root제외 나머지계정 암호규칙이다.
+- After setting up your configuration files, you will have to change all the passwords of the accounts present on the virtual machine, including the root account. (해석 잘모르겠음)
+- sudo 인증 비밀번호 시도는 3번으로 제한된다.
+- sudo 오류 발생시 지정 메시지가 표시되어야 한다.
+- sudo 입출력 로그는 /var/log/sudo/ 폴더에 저장해야 한다.
+- tty모드를 활성화 해야한다.
+- sudo 사용 경로를 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin 로 지정한다.
+- monitoring.sh 스크립트를 bash에서 구현한다.
+- 서버 시작시 monitoring.sh 스크립트는 10분마다 아래 내용을 표시해야 한다. 오류는 없어야 한다.
+- **스크립트 내용**
+```
+- 디펜스 동안 스크립트가 어떻게 작동하는지 설명해야 한다. 수정하지 않고 중단해야 한다.
+운영 체제의 아키텍처 및 커널 버전.
+물리 프로세서의 수.
+가상 프로세서의 수.
+서버에서 현재 사용 가능한 RAM 및 사용률(백분율).
+서버의 현재 사용 가능한 메모리 및 사용률(백분율).
+프로세서의 현재 사용률을 백분율로 표시합니다.
+마지막 재부팅 날짜 및 시간.
+LVM이 활성 상태인지 여부.
+활성 연결 수.
+서버를 사용하는 사용자 수.
+서버의 IPv4 주소 및 해당 MAC(Media Access Control) 주소.
+sudo 프로그램으로 실행된 명령 수.
+```
 ### lsblk 명령어
 - 부트로더를 sda1에 설치한 것을 확인할 수있다. (subject)
 
@@ -169,6 +198,11 @@ printf " cmd\n"
 - chmod +x monitoring.sh  > 실행하능하게 설정
 - crontab -e > crontab 수정
 ``` */10 * * * * /root/monitoring.sh | wall```  > 입력 (wall : 모든 사용자에게 메세지 기록)
+```
+service crond start   // crontab 시작
+service crond stop    // crontab 중지
+service crond restart    // crontab 재시작
+```
 
 ### group
 - 그룹 확인 : cat /etc/group
