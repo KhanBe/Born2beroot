@@ -4,15 +4,15 @@ Project in 42seoul 4th
 
 ## description
 
-#### lsblk
-- 부트로더를 sda1에 설치 (subject)
+### lsblk 명령어
+- 부트로더를 sda1에 설치한 것을 확인할 수있다. (subject)
 
-#### sudo 설치
+### sudo 설치
 - apt-get update (패키지 목록을 업데이트한다.)
 - apt-get install sudo (sudo를 설치한다.)
 - apt : 패키지를 관리하는 도구
 
-#### sudoers
+### sudoers
 - info : sudo명령어를 사용할 수 있는 계정을 관리하는 설정파일이다.
 - etc/sudoers 에 접근한다.
 - 파일을 읽어보면 sudoers파일은 visudo로만 수정되어야 하고 root명령으로만 해야한다고 적혀있다.
@@ -25,11 +25,11 @@ Project in 42seoul 4th
 - Defaults requiretty 추가 > tty를 할당 받지 않은 shell에서는 sudo를 사용하지 못하게 하는 옵션이다. (https://kldp.org/node/155210)
 - Defaults passwd_tries=3 추가 > 비밀번호 시도할 수 있는 횟수를 3으로 지정한다.
 
-#### iolog_dir
+### iolog_dir
 - 지정한 /var/log/sudo 경로가 없으면 추가한다.
 - mkdir /var/log/sudo 명령
 
-#### usermod
+### usermod
 - infor : usermod -aG "그룹" "계정" > 계정의 소속 그룹을 추가한다. (https://dololak.tistory.com/270)
 - usermod -aG sudo jaewoo 입력
 - login jaewoo 입력
@@ -37,7 +37,8 @@ Project in 42seoul 4th
 - su - 입력 (root login)
 - cat /var/log/sudo/00/00/01/log 입력 > 다른사용자들의 sudo명령을 확인할 수 있다.
 
-#### ufw 설치
+### ufw 설치
+- info : 방화벽
 - apt-get install ufw -y > 설치
 - ufw status verbose > 상태 자세히 
 - ufw enable > ufw가능하게 설정 (ufw disable > 불가능)
@@ -48,7 +49,8 @@ Project in 42seoul 4th
 
 debian vi command : (https://harryp.tistory.com/10)
 
-#### ssh 환경설정
+### ssh 환경설정
+- info : (Secure Shell) 원격 호스트에 접속하기 위해 사용되는 프로토콜
 - apt install openssh-server > 설치
 - vi /etc/ssh/sshd_confing
 - #Port 22  > Port 4242 변경
@@ -59,7 +61,7 @@ debian vi command : (https://harryp.tistory.com/10)
 
 hostname -I : 가상머신의 ip
 
-#### virtualBox 설정
+### virtualBox 설정
 - Tool 옆 Network 클릭
 - create 클릭
 - born2beroot의 setting 클릭
@@ -70,7 +72,7 @@ hostname -I : 가상머신의 ip
 - Mac 터미널에서 ssh id@192.168.56.1 -p 4242 > ssh 접근 (ssh key값도 넣어준다)
 - 설정에서 막아놓아서 root로 로그인은 불가능
 
-#### 패스워드 정책 설정
+### 패스워드 정책 설정
 - vi /etc/login.defs 에서 관리한다.
 - PASS_MAX_DAYS 30 변경 > 비밀번호를 최대로 사용가능한 일 수
 - PASS_MIN_DAYS 2 변경 > 비밀번호를 최소 사용가능한 일 수
@@ -84,6 +86,75 @@ hostname -I : 가상머신의 ip
 passwd -e jaewoo : jaewoo(사용자)의 비밀번호를 강제로 만료시키기
 passwd 명령어 (https://itwiki.kr/w/%EB%A6%AC%EB%88%85%EC%8A%A4_passwd(%EB%AA%85%EB%A0%B9%EC%96%B4))
 
-#### monitoring.sh 설정
-- 내일하기.
-- 
+### monitoring.sh 설정
+- apt-get -y install sysstat > '리눅스 성능 측정 도구 패키지' 설치
+- vi /root/monitoring.sh
+- 아래 내용 입력( > 이후는 주석)
+
+```
+printf "#Architecture : "
+uname -a  > 시스템 정보 전체 출력 (-i, -p옵션 제외)
+
+printf "#CPU physical : "
+nproc --all > 시스템에 설치된 총 처리장치 수 출력
+
+printf "#vCPU : "
+cat /proc/cpuinfo | grep processor | wc -l  > 전체 코어 수? 출력
+
+printf "#Memory Usage : "
+free -m | grep Mem | awk '{printf"%d/%dMB (%.2f%%)\n", $3, $2, $3/$2 * 100}'  > free -m : 메가바이트 단위 옵션의 메모리 출력
+
+printf "#Disk Usage : "
+df -a -BM | grep /dev/map | awk '{sum+=$3}END{print sum}' | tr -d '\n'  > 디스크용량 정보를 메가바이트 단위로 출력, 계산
+printf "/"
+df -a -BM | grep /dev/map | awk '{sum+=$4}END{print sum}' | tr -d '\n'
+printf "MB ("
+df -a -BM | grep /dev/map | awk '{sum1+=$3 ; sum2+=$4 }END{printf "%d", sum1 / sum2 * 100}' | tr -d '\n'
+printf "%%)\n"
+
+printf "#CPU load : "
+mpstat | grep all | awk '{printf "%.2f%%\n", 100-$13}'
+
+printf "#Last boot : "
+who -b | awk '{printf $3" "$4"\n"}' > 시스템 부팅 날짜 출력 ($3 : 날짜, $4 : 시간)
+
+printf "#LVM use : "
+if [ "$(lsblk | grep lvm | wc -l)" -gt 0 ] ; then printf "yes\n" ; else printf "no\n" ; fi  > lvm사용시 yes출력, 아니면 no출력
+
+printf "#Connections TCP : "
+ss | grep -i tcp | wc -l | tr -d '\n'  > tcp에 연결 수 출력
+printf " ESTABLISHED\n" 
+
+printf "#User log : "
+who | wc -l > 현 시스템에 로그인되어있는 사용자 수 출력
+
+printf "#Network : IP "
+hostname -I | tr -d '\n'  > 호스트의 ip출력 (즉 가상머신의 ip)
+printf "("
+ip link show | awk '$1 == "link/ether" {print $2}' | sed '2, $d' | tr -d '\n'
+printf ")\n"
+
+printf "#Sudo : "
+journalctl _COMM=sudo | wc -l | tr -d '\n'  > sudo의 로그 조회 수 출력
+printf " cmd\n"
+```
+
+- sysstat : 리눅스 성능 측정 도구 패키지
+- /proc/cpuinfo : cpu 코어 개별적인 세부사항 정보들이 담겨있는 파일
+- free -m : 메가바이트 단위 옵션의 메모리 출력
+- df 명령어 : 리눅스 시스템 전체의 (마운트 된) 디스크 사용량을 확인하는 명령어
+- mpstat : cpu 지표 측정
+- 쉘 스크립트 if문 : (https://jink1982.tistory.com/48)
+- lsblk 명령어 : 리눅스 디바이스 정보를 출력하는 명령어
+- lvm : (logical Volumn Manager) 리눅스의 저장 공간을 효율적이고 유연하게 관리하기 위한 커널의 한 부분 > lvm 정보 : (https://greencloud33.tistory.com/41)
+- sed '2, $d' : 2번째 행부터 마지막 행까지 삭제
+- journalctl : systemd의 로그를 journal로 관리한다. journal을 관리, 조회하는 소프트웨어
+- systemd : init 데몬, 요즘 init대신 systemd로 대체하게 된다.
+
+### cron
+- chmod +x monitoring.sh  > 실행하능하게 설정
+- crontab -e > crontab 수정
+``` */10 * * * * /root/monitoring.sh | wall```  > 입력 (wall : 모든 사용자에게 메세지 기록)
+
+### group
+- 그룹 확인 : cat /etc/group
