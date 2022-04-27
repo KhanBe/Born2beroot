@@ -122,14 +122,22 @@ hostname -I : 가상머신의 ip
 
 ### 패스워드 정책 설정
 - vi /etc/login.defs 에서 관리한다.
-- PASS_MAX_DAYS 30 변경 > 비밀번호를 최대로 사용가능한 일 수
-- PASS_MIN_DAYS 2 변경 > 비밀번호를 최소 사용가능한 일 수
-- PASS_WARN_AGE 7 변경 > 비밀번호 만료 7일전 경고해준다.
+- ```PASS_MAX_DAYS 30``` 변경 > 비밀번호를 최대로 사용가능한 일 수
+- ```PASS_MIN_DAYS 2``` 변경 > 비밀번호를 최소 사용가능한 일 수
+- ```PASS_WARN_AGE 7``` 변경 > 비밀번호 만료 7일전 경고해준다.
 - 저장 후 나가기
 - apt-get -y install libpam-pwquality > 설치
 - vi /etc/pam.d/common-password
-- retry=3 뒤에 띄어쓰기 구분으로 추가하기 > minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 maxrepeat=3 reject_username enforce_for_root difok=7
+- ```retry=3``` 뒤에 띄어쓰기 구분으로 추가하기 > ```minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 maxrepeat=3 reject_username enforce_for_root difok=7```
 - 저장 후 나가기
+- retry=3 : 암호 입력 3회 시도
+- minlen=10 : 암호 최소 길이 10
+- difok : 기존 암호와 달라야하는 문자 수 7
+- ucredit=-1 : 대문자 한개 이상
+- lcredit=-1 : 소문자 한개 이상
+- dcredit=-1 : 숫자 한개 이상
+- reject_username : 사용자 이름이 들어가거나, 거꾸로 들어가면 암호 설정 거부한다.
+- enforce_for_root : root사용자가 암호 변경시에도 위 조건 적용해야한다.
 
 passwd -e jaewoo : jaewoo(사용자)의 비밀번호를 강제로 만료시키기
 passwd 명령어 (https://itwiki.kr/w/%EB%A6%AC%EB%88%85%EC%8A%A4_passwd(%EB%AA%85%EB%A0%B9%EC%96%B4))
@@ -215,14 +223,6 @@ service crond restart    // crontab 재시작
 - usermod -aG sudo,user42 jaewoo(사용자이름) > 계정의 소속 그룹을 추가 한다.
 - usermod -g user42 jaewoo > 계정의 기본 소속 그룹을 변경한다.
 
-### apt & aptitude
-#### apt : 소프트웨어의 설치와 제거 처리해주는 패키지 관리 툴
-
-#### aptitude : 사용자 인터페이스를 추가해 사용자와 대화형으로 패키지를 검색해 설치, 제거 가능한 high-level 패키지 관리도구이다.
-- apt 보다 방대하다.
-- apt-get, get-cache의 기능들을 가지고있다.
-- (https://velog.io/@joonpark/aptitude-vs-apt)
-
 ### hostname 변경
 - hostname 이름 > 재 시작시 다시 돌아옴
 - hostnamectl set-hostname 이름 > 영구 변경
@@ -232,3 +232,30 @@ service crond restart    // crontab 재시작
 
 ### user 추가
 - adduser 이름
+
+### user 암호 변경
+- sudo passwd 유저이름
+
+---
+## 평가
+
+### apt & aptitude
+#### apt : 소프트웨어의 설치와 제거 처리해주는 패키지 관리 툴
+
+#### aptitude : 사용자 인터페이스를 추가해 사용자와 대화형으로 패키지를 검색해 설치, 제거 가능한 high-level 패키지 관리도구이다.
+- apt 보다 방대하다.
+- apt 보다 유연하게 처리해준다.
+- apt-get, get-cache의 기능들을 가지고있다.
+- (https://velog.io/@joonpark/aptitude-vs-apt)
+
+#### dpkg
+- cd룸이나 다른 디스크 장치에 있는 .deb파일을 제어하는 경우에 일반적으로 사용된다.
+- apt보다 낮은 수준에서 수행된다.
+- 보통 apt 명령으로 충분하지만, 특정 파일이 어떤 패키지에 포함이되는지 확인 작업은 dpkg 명령어가 필요하다.
+
+#### AppArmor
+- 시스템 관리자가 프로그램 프로필 별로 프로그램 역량을 제한 할 수 있게 해주는 리눅스 보안 모듈이다.
+- 정책 파일을 통해 특정 어플리케이션이 어떤 파일/경로에 접근 가능한지 허용해준다.
+- enforce 모드 : 허가되지 않은 파일에 접근하는 것을 거부하는 모드
+- complain 모드 : 어플리케이션이 해야할 행동이 아닌 다른 행동을 하는 경우 AppArmor가 로그를 남겨준다.
+- sudo aa-status > AppArmor 상태확인
