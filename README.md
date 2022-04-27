@@ -86,7 +86,7 @@ sudo 프로그램으로 실행된 명령 수.
 - cat /var/log/sudo/00/00/01/log 입력 > 다른사용자들의 sudo명령을 확인할 수 있다.
 
 ### ufw 설치
-- info : 방화벽
+- info : 데비안에서 사용하는 방화벽 관리 프로그램
 - apt-get install ufw -y > 설치
 - ufw status verbose > 상태 자세히 
 - ufw enable > ufw가능하게 설정 (ufw disable > 불가능)
@@ -222,6 +222,7 @@ service crond restart    // crontab 재시작
 - groupadd user42 > 그룹 추가
 - usermod -aG sudo,user42 jaewoo(사용자이름) > 계정의 소속 그룹을 추가 한다.
 - usermod -g user42 jaewoo > 계정의 기본 소속 그룹을 변경한다.
+- groups 사용자명 > 사용자 그룹 출력
 
 ### hostname 변경
 - hostname 이름 > 재 시작시 다시 돌아옴
@@ -261,9 +262,22 @@ service crond restart    // crontab 재시작
 - sudo aa-status > AppArmor 상태확인
 
 ### 가상머신의 작동 방식
-- 
+- 가상머신은 물리적 하드웨어 시스템에 구축되어 자체 CPU, 메모리, 네트워크 인터페이스 및 스토리지를 갖추고 가상 컴퓨터 시스템으로 작동한다.
+- 하이퍼바이저를 이용해 운영체제와 가상 머신의 리소스를 분리해 가상머신을 생성 관리한다.
+- 하이퍼바이저는 하드웨어를 관리하며 물리적 리소스를 가상 환경과 분리한다.
+
 ### 가상머신의 목적
 - 새로운 OS를 시험
 - 다른 운영체제 사용
 - 이전 버전의 OS 설치하여 앱 실행
+- 컴퓨터의 다른 부분에 영향을 주지 않는 독립 환경을 만들어, 악성 코드 분석, 감염 예방
 
+### centOS vs debian
+- 레드햇계열에는 centOS가 있고 데비안계열에는 우분투가 있다.
+- 데비안은 패키지 설치 및 업그레이드가 단순하다.
+
+### sudo란
+- 최상위 관리자(root)의 권한으로 명령하는 것.
+
+### cron
+- 시간 기반 잡 스케줄러.
