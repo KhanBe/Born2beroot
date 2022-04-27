@@ -259,3 +259,11 @@ service crond restart    // crontab 재시작
 - enforce 모드 : 허가되지 않은 파일에 접근하는 것을 거부하는 모드
 - complain 모드 : 어플리케이션이 해야할 행동이 아닌 다른 행동을 하는 경우 AppArmor가 로그를 남겨준다.
 - sudo aa-status > AppArmor 상태확인
+
+### 가상머신의 작동 방식
+- 
+### 가상머신의 목적
+- 새로운 OS를 시험
+- 다른 운영체제 사용
+- 이전 버전의 OS 설치하여 앱 실행
+
