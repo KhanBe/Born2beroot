@@ -212,9 +212,9 @@ printf " cmd\n"
 - crontab -e > crontab 수정
 ``` */10 * * * * /root/monitoring.sh | wall```  > 입력 (wall : 모든 사용자에게 메세지 기록)
 ```
-service crond start   // crontab 시작
-service crond stop    // crontab 중지
-service crond restart    // crontab 재시작
+service cron start   // crontab 시작
+service cron stop    // crontab 중지
+service cron restart    // crontab 재시작
 ```
 
 ### group
@@ -281,9 +281,13 @@ service crond restart    // crontab 재시작
 
 ### cron
 - 시간 기반 잡 스케줄러.
+- 소프트웨어 환경을 주기적으로 관리하게 한다.
+- 리눅스에서는 5개의 필드를 구성한다. 쿼츠 크론 표현식은 (초 분 시 일 월 주 년)
+- 분 시 일 월 주
+- '*' 는 매 번을 의미한다.
 
 ### LVM
-- 논리적으로 공관을 관리하는 프로그램
+- 논리적으로 공관을 관리하는 프로그램, Logical Volume을 효율적이고 유연하게 관리하기 위한 커널의 한 부분
 - 여러개의 디스크공간을 하나로 합쳐 사용하기 위해
 - 사용하기 애매한 디스크 파티션을 활용하기 위해
 - 기존에 사용중인 디스크 공간을 확장하기 위해
@@ -293,4 +297,14 @@ service crond restart    // crontab 재시작
 - sda2는 최상위 디렉토리공간과 xfs파일시스템 / swap 과 swap파일시스템 으로 나눠 사용한다.
 - (https://mamu2830.blogspot.com/2019/12/lvmpv-vg-lv-pe-lvm.html)
 
-### 
+### Mount
+- 1. 디스크 추가
+- 2. 디스크 파티션을 나눈 뒤 사용할 시스템에 맞게 타입 정하기
+- 3. 용도에 맞게 파일시스템 포멧하기
+- 4. 디스크를 마운트 할 마운트 디렉토리 생성하기
+- 5. 마운트 명령으로 마운트 하기
+- (https://mamu2830.blogspot.com/2019/11/fdisk-df-etcfstab-blkid.html)
+
+### ssh 환경설정
+- (Secure Shell) 원격 호스트에 접속하기 위해 사용되는 프로토콜
+- 모든 데이터 전송시 암호화되어 전송된다. 보안에 큰 장점
