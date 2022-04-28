@@ -126,7 +126,7 @@ hostname -I : 가상머신의 ip
 - ```PASS_MIN_DAYS 2``` 변경 > 비밀번호를 최소 사용가능한 일 수
 - ```PASS_WARN_AGE 7``` 변경 > 비밀번호 만료 7일전 경고해준다.
 - 저장 후 나가기
-- apt-get -y install libpam-pwquality > 설치
+- apt-get -y install libpam-pwquality > 설치 pam : 어플리케이션에 대해 사용자 권한을 제어하는 모듈
 - vi /etc/pam.d/common-password
 - ```retry=3``` 뒤에 띄어쓰기 구분으로 추가하기 > ```minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 maxrepeat=3 reject_username enforce_for_root difok=7```
 - 저장 후 나가기
