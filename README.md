@@ -5,7 +5,6 @@ Project in 42seoul 4th
 ## subject translation
 - Virtual Box를 사용한다
 - 그래픽 인터페이스는 사용되지 않는다.
-- 데비안 쓰는것을 추천한다.
 - LVM을 사용하여 암호화된 파티션을 2개 이상 생성해야 한다.
 - ssh 포트는 4242에서만 실행해야한다.
 - 보안상의 이유로 root로 불가능하게 한다.
