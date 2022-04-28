@@ -273,6 +273,8 @@ service cron restart    // crontab 재시작
 
 ### centOS vs debian
 - 레드햇계열에는 centOS가 있고 데비안계열에는 우분투가 있다.
+- 기업용 > centOS
+- 개인용 > debian
 - 데비안은 패키지 설치 및 업그레이드가 단순하다.
 
 ### sudo란
