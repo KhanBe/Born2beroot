@@ -307,3 +307,8 @@ service cron restart    // crontab 재시작
 ### ssh 환경설정
 - (Secure Shell) 원격 호스트에 접속하기 위해 사용되는 프로토콜
 - 모든 데이터 전송시 암호화되어 전송된다. 보안에 큰 장점
+
+### pam
+- Pluggable Authentication Modules, 인증 모듈
+- 시스템에 공통적인 인증 방법을 제공한다.
+
