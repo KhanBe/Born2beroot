@@ -135,6 +135,7 @@ hostname -I : 가상머신의 ip
 - ucredit=-1 : 대문자 한개 이상
 - lcredit=-1 : 소문자 한개 이상
 - dcredit=-1 : 숫자 한개 이상
+- maxrepeat=3 : 중복글자는 최대3글자 까지가능
 - reject_username : 사용자 이름이 들어가거나, 거꾸로 들어가면 암호 설정 거부한다.
 - enforce_for_root : root사용자가 암호 변경시에도 위 조건 적용해야한다.
 
@@ -154,7 +155,7 @@ printf "#CPU physical : "
 nproc --all > 시스템에 설치된 총 처리장치 수 출력
 
 printf "#vCPU : "
-cat /proc/cpuinfo | grep processor | wc -l  > 전체 코어 수? 출력
+cat /proc/cpuinfo | grep processor | wc -l  > 가상 프로세서 수 출력
 
 printf "#Memory Usage : "
 free -m | grep Mem | awk '{printf"%d/%dMB (%.2f%%)\n", $3, $2, $3/$2 * 100}'  > free -m : 메가바이트 단위 옵션의 메모리 출력
@@ -186,7 +187,7 @@ who | wc -l > 현 시스템에 로그인되어있는 사용자 수 출력
 printf "#Network : IP "
 hostname -I | tr -d '\n'  > 호스트의 ip출력 (즉 가상머신의 ip)
 printf "("
-ip link show | awk '$1 == "link/ether" {print $2}' | sed '2, $d' | tr -d '\n'
+ip link show | awk '$1 == "link/ether" {print $2}' | sed '2, $d' | tr -d '\n' > mac주소
 printf ")\n"
 
 printf "#Sudo : "
@@ -227,9 +228,6 @@ service cron restart    // crontab 재시작
 - hostname 이름 > 재 시작시 다시 돌아옴
 - hostnamectl set-hostname 이름 > 영구 변경
 
-### user 전체 보기
-- grep /bin/bash /etc/passwd | cut -f1 -d:
-
 ### user 추가
 - adduser 이름
 
@@ -263,6 +261,7 @@ service cron restart    // crontab 재시작
 ### 가상머신의 작동 방식
 - 가상머신은 물리적 하드웨어 시스템에 구축되어 자체 CPU, 메모리, 네트워크 인터페이스 및 스토리지를 갖추고 가상 컴퓨터 시스템으로 작동한다.
 - 하이퍼바이저 소프트웨어는 하드웨어에 구축된 가상머신 리소스들을 분리해서 가상머신을 사용할 수 있게 한다.
+- Provisioning : 사용자의 요구에 맞게 시스템 자원을 할당하여 필요시 사용가능하게 준비 해두는 것.
 
 ### 가상머신의 목적
 - 새로운 OS를 시험
@@ -271,10 +270,9 @@ service cron restart    // crontab 재시작
 - 컴퓨터의 다른 부분에 영향을 주지 않는 독립 환경을 만들어, 악성 코드 분석, 감염 예방
 
 ### centOS vs debian
-- 레드햇계열에는 centOS가 있고 데비안계열에는 우분투가 있다.
-- 기업용 > centOS
-- 개인용 > debian
-- 데비안은 패키지 설치 및 업그레이드가 단순하다.
+- CentOS : 레드햇 기반 운영체제이다.
+- 데비안 : 오픈소스 운영체제
+- 데비안 : 패키지 설치 및 업그레이드가 단순하다.
 
 ### sudo란
 - 최상위 관리자(root)의 권한으로 명령하는 것.
@@ -313,3 +311,11 @@ service cron restart    // crontab 재시작
 - Pluggable Authentication Modules, 인증 모듈
 - 시스템에 공통적인 인증 방법을 제공한다.
 
+### 운영체제 확인
+- hostnamectl
+
+### 서비스 상태 확인
+- systenctl status 이름
+
+### user 전체 보기
+- grep /bin/bash /etc/passwd | cut -f1 -d:   > ':'구분자로 1번째 필드만 자른다.
