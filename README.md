@@ -323,3 +323,10 @@ service cron restart    // crontab 재시작
 ### 가상머신 재부팅시 cron을 실행 못하게
 - ```systemctl disable cron```
 - ```systemctl stop cron```
+
+### systemctl
+- sysytemctl은 systemd(system daemon)을 관리하는 명령어
+- ```systemctl enable ufw```
+- ```systemctl disable ufw```
+- 이런식으로 enable/disable을 통해 서비스를 자동으로 실행하게 도와준다.
+- (init daemon쪽으로 검색해보기)
