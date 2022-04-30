@@ -319,3 +319,7 @@ service cron restart    // crontab 재시작
 
 ### user 전체 보기
 - grep /bin/bash /etc/passwd | cut -f1 -d:   > ':'구분자로 1번째 필드만 자른다.
+
+### 가상머신 재부팅시 cron을 실행 못하게
+- ```systemctl disable cron```
+- ```systemctl stop cron```
