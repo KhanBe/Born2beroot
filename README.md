@@ -330,3 +330,5 @@ service cron restart    // crontab 재시작
 - ```systemctl disable ufw```
 - 이런식으로 enable/disable을 통해 서비스를 자동으로 실행하게 도와준다.
 - (init daemon쪽으로 검색해보기)
+
+깃 블로그에 
